@@ -14,17 +14,35 @@ import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Link from 'next/link';
+import Slide from '@mui/material/Slide';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+
+
+import SignIn from './SignIn'
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const ResponsiveAppBar = () => {
+function HideOnScroll(props) {
+  const { children, window } = props;
+
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+const ResponsiveAppBar = (props) => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -133,123 +151,128 @@ const ResponsiveAppBar = () => {
   );
 
   return (
-    <AppBar position="static" className='mb-10'>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            DATAHUNT+
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            DATAHUNT+
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+    <HideOnScroll {...props}>
+      <AppBar className='mb-10'>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Link key = 'home' href="/">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                className='cursor-pointer '
               >
-                {page}
-              </Button>
-            ))}
-          </Box>
+                DataHunt+
+              </Typography>
+            </Link>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            >
+              DATAHUNT+
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
 
-          {auth && (
-            <div>
-                <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                    </IconButton>
-                    <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                    >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                    </IconButton>
-                    <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                    color="inherit"
-                    >
-                    <AccountCircle />
-                    </IconButton>
-                </Box>
-                <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                    <IconButton
-                    size="large"
-                    aria-label="show more"
-                    aria-controls={mobileMenuId}
-                    aria-haspopup="true"
-                    onClick={handleMobileMenuOpen}
-                    color="inherit"
-                    >
-                    <MoreIcon />
-                    </IconButton>
-                </Box>
-                {renderMobileMenu}
-                {renderMenu}
-            </div>
-          )}
-        </Toolbar>
-      </Container>
-    </AppBar>
+            {auth ? (
+              <div>
+                  <Box sx={{ flexGrow: 1 }} />
+                  <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                      <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                        <Badge badgeContent={4} color="error">
+                            <MailIcon />
+                        </Badge>
+                      </IconButton>
+                      <IconButton
+                        size="large"
+                        aria-label="show 17 new notifications"
+                        color="inherit"
+                      >
+                        <Badge badgeContent={17} color="error">
+                            <NotificationsIcon />
+                        </Badge>
+                      </IconButton>
+                      <IconButton
+                        size="large"
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                  </Box>
+                  <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                      <IconButton
+                        size="large"
+                        aria-label="show more"
+                        aria-controls={mobileMenuId}
+                        aria-haspopup="true"
+                        onClick={handleMobileMenuOpen}
+                        color="inherit"
+                      >
+                        <MoreIcon />
+                      </IconButton>
+                  </Box>
+                  {renderMobileMenu}
+                  {renderMenu}
+              </div>
+            ): <SignIn />}
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </HideOnScroll>
+    
   );
 };
 export default ResponsiveAppBar;
