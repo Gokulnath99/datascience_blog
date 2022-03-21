@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../styles/globals.scss';
+import '../styles/Carousel.css'
 import { Layout } from '../components';
 
 function MyApp({ Component, pageProps }) {
