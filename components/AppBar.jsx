@@ -18,9 +18,6 @@ import Link from 'next/link';
 import Slide from '@mui/material/Slide';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-
-import SignIn from './SignIn'
-
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -267,7 +264,7 @@ const ResponsiveAppBar = (props) => {
                   {renderMobileMenu}
                   {renderMenu}
               </div>
-            ): <SignIn />}
+            ): <div>SignIn</div>}
           </Toolbar>
         </Container>
       </AppBar>
