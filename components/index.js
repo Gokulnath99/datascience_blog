@@ -10,4 +10,3 @@ export { default as PostDetail }  from './PostDetail';
 export { default as Loader }  from './Loader';
 export { default as AdjacentPostCard }  from './AdjacentPostCard';
 export { default as AppBar }  from './AppBar';
-export { default as SignIn }  from './SignIn';
