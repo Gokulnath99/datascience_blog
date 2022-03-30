@@ -152,7 +152,7 @@ const ResponsiveAppBar = (props) => {
 
   return (
     <HideOnScroll {...props}>
-      <AppBar className='mb-10'>
+      <AppBar className='app-bar mb-10'>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Link key = 'home' href="/">
