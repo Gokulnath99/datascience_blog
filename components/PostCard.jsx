@@ -7,22 +7,30 @@ import Divider from '@mui/material/Divider';
 import { grpahCMSImageLoader } from '../util';
 
 const PostCard = ({ post }) => (
-  <div className="grid grid-cols-2  bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8">
+  <div className="grid md:grid-cols-2 bg-gray-50 drop-shadow-lg rounded-lg mb-8">
       <div>
-        <div className="relative overflow-hidden shadow-md pb-80 mb-6">
-          <img src={post.featuredImage.url} alt="" className="object-center absolute h-80 w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg" />
+        <div className="relative overflow-hidden pb-80 md:rounded-lg rounded-t-lg h-full">
+          <img src={post.featuredImage.url} alt="" className="object-center absolute h-full w-full object-cover" />
         </div>
       </div>
-      <div>
-        <h1 className="transition duration-700 text-left mb-4 cursor-pointer hover:text-pink-600 text-xl font-semibold pl-4 lg:pl-15 my-4">
+      <div className="grid grid-cols-1 px-4">
+        <h1 className="transition duration-700 text-left mb-4 cursor-pointer hover:text-pink-600 sm:text-xl text-sm font-semibold lg:pl-15 my-4">
           <Link href={`/post/${post.slug}`}>{post.title}</Link>
         </h1>
         <Divider variant="middle" />
         <p className="text-left text-sm text-gray-700 font-normal pl-4 lg:pl-15 my-4">
           {post.excerpt}
         </p>
-        <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
-          <div className="flex items-center justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
+        <div>
+          <ul className='flex flex-wrap justify-start'>
+            {post.categories.map((category,index) =>(
+              <li key={index} className='mx-1 px-2 rounded-full bg-gradient-to-r from-white to-blue-500'>{category.name}</li>
+            ))
+            }
+          </ul>
+        </div>
+        <div className="block lg:flex text-center items-center justify-center my-4 w-full">
+          <div className="flex items-center justify-center my-2 lg:mb-0 w-full lg:w-auto mr-8">
             <Image
               unoptimized
               loader={grpahCMSImageLoader}
@@ -41,7 +49,7 @@ const PostCard = ({ post }) => (
             <span className="align-middle">{moment(post.createdAt).format('MMM DD, YYYY')}</span>
           </div>
         </div>
-        <div className="text-center">
+        <div className="text-center h-20">
           <Link href={`/post/${post.slug}`}>
             <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer">Continue Reading</span>
           </Link>
